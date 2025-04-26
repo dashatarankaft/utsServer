@@ -16,7 +16,7 @@ services:
       - APP_DEBUG=true
       - DB_CONNECTION=mysql
       - DB_HOST=db
-      - DB_PORT=3306
+      - DB_PORT=3307
       - DB_DATABASE=utsServer_db
       - DB_USERNAME=root
       - DB_PASSWORD=root
