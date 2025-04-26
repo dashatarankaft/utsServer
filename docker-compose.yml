@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: utsServer_app
+    working_dir: /var/www/utsServer
+    volumes:
+      - ./:/var/www/utsServer
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=utsServer_db
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+    depends_on:
+      - db
+    networks:
+      - utsServer_network
+
+  db:
+    image: mysql:8.0
+    container_name: utsServer_db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=utsServer_db
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3307:3307"
+    networks:
+      - utsServer_network
+
+volumes:
+  db_data:
+
+networks:
+  utsServer_network:
+    driver: bridge
